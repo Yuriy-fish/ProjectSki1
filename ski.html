@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Youth Education — Diễn đàn Học tập</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:#1a1a2e; --paper:#faf8f3; --cream:#f2ede3;
+    --accent:#c8622a; --accent-light:#e8895a;
+    --teal:#2a7f7f; --gold:#d4a843;
+    --muted:#7a7060; --border:#d8d0c0; --shadow:rgba(26,26,46,0.12);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);min-height:100vh;overflow-x:hidden;}
+  .page{display:none;} .page.active{display:block;}
+  .bg-pattern{position:fixed;inset:0;pointer-events:none;z-index:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 59px,var(--border) 60px),repeating-linear-gradient(90deg,transparent,transparent 59px,var(--border) 60px);opacity:0.18;}
+
+  /* NAV */
+  nav{background:var(--ink);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:60px;position:sticky;top:0;z-index:100;box-shadow:0 2px 20px var(--shadow);}
+  .nav-logo{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:900;color:var(--paper);display:flex;align-items:center;gap:10px;cursor:pointer;text-decoration:none;}
+  .nav-logo .lb{width:32px;height:32px;border-radius:7px;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:0.95rem;}
+  .nav-links{display:flex;gap:0.5rem;}
+  .nav-btn{background:none;border:1.5px solid rgba(255,255,255,0.25);color:var(--paper);font-family:'DM Sans',sans-serif;font-size:0.83rem;font-weight:500;padding:0.4rem 1rem;border-radius:6px;cursor:pointer;transition:all 0.2s;}
+  .nav-btn:hover{background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.5);}
+  .nav-btn.primary{background:var(--accent);border-color:var(--accent);color:white;}
+  .nav-btn.primary:hover{background:var(--accent-light);}
+
+  /* HOME */
+  #page-home{position:relative;z-index:1;min-height:100vh;}
+  .hero{background:var(--ink);padding:5rem 2rem 4rem;text-align:center;position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(200,98,42,0.15),transparent 60%),radial-gradient(ellipse at 70% 50%,rgba(42,127,127,0.15),transparent 60%);}
+  .hero-tag{display:inline-block;font-size:0.7rem;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold);padding:0.28rem 1rem;border-radius:20px;margin-bottom:1.4rem;position:relative;}
+  .hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.4rem,6vw,4.2rem);font-weight:900;color:var(--paper);line-height:1.1;position:relative;margin-bottom:1.2rem;}
+  .hero h1 em{color:var(--accent-light);font-style:italic;}
+  .hero p{color:rgba(250,248,243,0.65);font-size:1rem;font-weight:300;max-width:500px;margin:0 auto 2.4rem;position:relative;line-height:1.7;}
+  .hero-cta{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;position:relative;}
+  .btn{display:inline-flex;align-items:center;gap:0.5rem;padding:0.72rem 1.7rem;border-radius:8px;font-size:0.93rem;font-weight:600;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;transition:all 0.25s;text-decoration:none;}
+  .btn-accent{background:var(--accent);color:white;}
+  .btn-accent:hover{background:var(--accent-light);transform:translateY(-2px);box-shadow:0 8px 20px rgba(200,98,42,0.35);}
+  .btn-outline{background:transparent;color:var(--paper);border:1.5px solid rgba(255,255,255,0.3);}
+  .btn-outline:hover{background:rgba(255,255,255,0.08);transform:translateY(-2px);}
+  .stats-bar{background:var(--cream);border-bottom:1px solid var(--border);padding:1.2rem 2rem;display:flex;justify-content:center;gap:3rem;flex-wrap:wrap;}
+  .stat{text-align:center;}
+  .stat-num{font-family:'Playfair Display',serif;font-size:1.55rem;font-weight:700;color:var(--accent);}
+  .stat-label{font-size:0.73rem;color:var(--muted);}
+  .main-layout{max-width:1100px;margin:0 auto;padding:2.5rem 2rem;display:grid;grid-template-columns:1fr 300px;gap:2rem;}
+  @media(max-width:800px){.main-layout{grid-template-columns:1fr;}.hside{order:-1;}}
+  .section-head{display:flex;align-items:center;gap:0.8rem;margin-bottom:1.1rem;}
+  .section-head h2{font-family:'Playfair Display',serif;font-size:1.35rem;font-weight:700;}
+  .section-head .line{flex:1;height:1px;background:var(--border);}
+  .forum-category{background:white;border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:0 2px 12px var(--shadow);margin-bottom:1.4rem;}
+  .cat-hdr{padding:0.95rem 1.4rem;display:flex;align-items:center;gap:0.8rem;border-bottom:1px solid var(--cream);}
+  .cat-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.05rem;flex-shrink:0;}
+  .cat-hdr h3{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;}
+  .cat-hdr p{font-size:0.75rem;color:var(--muted);margin-top:1px;}
+  .fitem{display:flex;align-items:center;padding:0.88rem 1.4rem;border-bottom:1px solid var(--cream);cursor:pointer;transition:background 0.15s;text-decoration:none;color:inherit;}
+  .fitem:last-child{border-bottom:none;}
+  .fitem:hover{background:var(--paper);}
+  .fitem:hover .fi-name{color:var(--accent);}
+  .fi-icon{width:32px;height:32px;border-radius:7px;background:var(--cream);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0;margin-right:1rem;transition:background 0.15s;}
+  .fitem:hover .fi-icon{background:var(--accent);}
+  .fi-info{flex:1;}
+  .fi-name{font-weight:600;font-size:0.9rem;}
+  .fi-desc{font-size:0.73rem;color:var(--muted);margin-top:2px;}
+  .fi-meta{text-align:right;font-size:0.7rem;color:var(--muted);line-height:1.5;flex-shrink:0;}
+  .fi-meta strong{color:var(--ink);font-size:0.78rem;display:block;}
+  .hside{}
+  .sc{background:white;border:1px solid var(--border);border-radius:12px;padding:1.1rem;margin-bottom:1.1rem;box-shadow:0 1px 6px var(--shadow);}
+  .sc h3{font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:700;margin-bottom:0.9rem;padding-bottom:0.65rem;border-bottom:1px solid var(--cream);}
+  .pc{background:white;border:1px solid var(--border);border-radius:10px;padding:1rem;margin-bottom:0.9rem;cursor:pointer;transition:all 0.2s;box-shadow:0 1px 5px var(--shadow);}
+  .pc:last-child{margin-bottom:0;}
+  .pc:hover{transform:translateY(-2px);box-shadow:0 5px 18px var(--shadow);border-color:var(--accent);}
+  .pc-tag{display:inline-block;font-size:0.63rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:0.18rem 0.55rem;border-radius:4px;margin-bottom:0.5rem;}
+  .tt{background:rgba(42,127,127,0.12);color:var(--teal);}
+  .ts{background:rgba(200,98,42,0.12);color:var(--accent);}
+  .tc{background:rgba(212,168,67,0.12);color:#a07830;}
+  .pc h4{font-weight:600;font-size:0.85rem;line-height:1.4;margin-bottom:0.35rem;}
+  .pc p{font-size:0.73rem;color:var(--muted);line-height:1.5;}
+  .pc-foot{display:flex;align-items:center;gap:0.55rem;margin-top:0.75rem;}
+  .avm{width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--accent));display:flex;align-items:center;justify-content:center;font-size:0.58rem;color:white;font-weight:700;}
+  .pm{font-size:0.68rem;color:var(--muted);}
+  .su{display:flex;align-items:center;gap:0.75rem;margin-bottom:0.75rem;}
+  .avs{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.78rem;color:white;font-weight:700;flex-shrink:0;}
+  .sui strong{font-size:0.82rem;display:block;}
+  .sui span{font-size:0.7rem;color:var(--muted);}
+  .ql{display:flex;align-items:center;gap:0.55rem;padding:0.45rem 0;border-bottom:1px solid var(--cream);cursor:pointer;font-size:0.8rem;font-weight:500;color:var(--ink);transition:color 0.15s;text-decoration:none;}
+  .ql:last-child{border-bottom:none;}
+  .ql:hover{color:var(--accent);}
+  footer{background:var(--ink);color:rgba(250,248,243,0.55);padding:2rem;text-align:center;font-size:0.76rem;margin-top:2rem;}
+  footer strong{color:var(--paper);}
+
+  /* AUTH */
+  #page-auth{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;position:relative;z-index:1;}
+  @media(max-width:700px){#page-auth{grid-template-columns:1fr;}.auth-left{display:none;}}
+  .auth-left{background:var(--ink);display:flex;flex-direction:column;justify-content:center;padding:3rem;position:relative;overflow:hidden;}
+  .auth-left::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 80%,rgba(200,98,42,0.2),transparent 50%),radial-gradient(ellipse at 80% 20%,rgba(42,127,127,0.2),transparent 50%);}
+  .alc{position:relative;}
+  .alc .logo{font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:900;color:var(--paper);margin-bottom:2.2rem;}
+  .alc .logo span{color:var(--accent-light);}
+  .aq{font-family:'Playfair Display',serif;font-size:1.85rem;font-weight:700;color:var(--paper);line-height:1.3;margin-bottom:1.3rem;}
+  .aq em{color:var(--gold);font-style:italic;}
+  .auth-left p{color:rgba(250,248,243,0.6);font-size:0.87rem;line-height:1.7;}
+  .adec{position:absolute;bottom:2rem;right:2rem;font-size:7rem;opacity:0.05;line-height:1;font-family:'Playfair Display',serif;font-weight:900;color:white;}
+  .auth-right{display:flex;flex-direction:column;justify-content:center;padding:3rem 2.5rem;background:var(--paper);overflow-y:auto;}
+  .auth-back{display:inline-flex;align-items:center;gap:0.4rem;font-size:0.78rem;color:var(--muted);cursor:pointer;margin-bottom:1.8rem;background:none;border:none;font-family:'DM Sans',sans-serif;transition:color 0.2s;}
+  .auth-back:hover{color:var(--accent);}
+  .auth-tabs{display:flex;margin-bottom:1.8rem;background:var(--cream);border-radius:10px;padding:4px;border:1px solid var(--border);}
+  .auth-tab{flex:1;padding:0.6rem;border-radius:7px;border:none;font-family:'DM Sans',sans-serif;font-size:0.86rem;font-weight:500;cursor:pointer;transition:all 0.2s;background:none;color:var(--muted);}
+  .auth-tab.active{background:white;color:var(--ink);box-shadow:0 1px 6px var(--shadow);}
+  .auth-form{display:none;}
+  .auth-form.active{display:block;}
+  .auth-form h2{font-family:'Playfair Display',serif;font-size:1.65rem;font-weight:700;margin-bottom:0.35rem;}
+  .auth-form .sub{font-size:0.83rem;color:var(--muted);margin-bottom:1.6rem;}
+  .fg{margin-bottom:1rem;}
+  .fg label{display:block;font-size:0.76rem;font-weight:600;color:var(--ink);margin-bottom:0.35rem;}
+  .fg input[type=text],.fg input[type=password],.fg input[type=email]{width:100%;padding:0.68rem 0.9rem;border:1.5px solid var(--border);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.88rem;background:white;color:var(--ink);transition:border-color 0.2s,box-shadow 0.2s;outline:none;}
+  .fg input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(200,98,42,0.1);}
+  .fg input.error{border-color:#e53e3e;}
+  .fg .em{font-size:0.71rem;color:#e53e3e;margin-top:3px;display:none;}
+  .fg input.error+.em{display:block;}
+  .fua{border:2px dashed var(--border);border-radius:10px;padding:1.4rem;text-align:center;cursor:pointer;transition:all 0.2s;position:relative;background:var(--cream);}
+  .fua:hover{border-color:var(--accent);background:rgba(200,98,42,0.04);}
+  .fua input{position:absolute;inset:0;opacity:0;cursor:pointer;}
+  .fua .uic{font-size:1.8rem;margin-bottom:0.4rem;}
+  .fua p{font-size:0.78rem;color:var(--muted);}
+  .fua strong{color:var(--accent);font-size:0.76rem;}
+  .fprev{display:none;align-items:center;gap:1rem;padding:0.75rem;background:white;border-radius:8px;border:1px solid var(--border);margin-top:0.55rem;}
+  .fprev img{width:46px;height:46px;border-radius:50%;object-fit:cover;}
+  .fprev span{font-size:0.78rem;color:var(--muted);}
+  .fprev .rf{margin-left:auto;background:none;border:none;color:var(--muted);cursor:pointer;font-size:1rem;}
+  .fprev .rf:hover{color:#e53e3e;}
+  .rs{display:flex;gap:0.75rem;}
+  .ro{flex:1;padding:0.75rem;border:1.5px solid var(--border);border-radius:8px;text-align:center;cursor:pointer;transition:all 0.2s;position:relative;}
+  .ro input{position:absolute;opacity:0;}
+  .ro .ri{font-size:1.4rem;display:block;margin-bottom:0.25rem;}
+  .ro .rl{font-size:0.76rem;font-weight:600;color:var(--muted);}
+  .ro.selected{border-color:var(--accent);background:rgba(200,98,42,0.05);}
+  .ro.selected .rl{color:var(--accent);}
+  .sbtn{width:100%;padding:0.82rem;background:var(--ink);color:var(--paper);border:none;border-radius:8px;font-size:0.93rem;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.25s;margin-top:0.4rem;}
+  .sbtn:hover{background:var(--accent);transform:translateY(-1px);box-shadow:0 6px 18px var(--shadow);}
+
+  /* TOAST */
+  .toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(100px);background:var(--ink);color:var(--paper);padding:0.75rem 1.4rem;border-radius:8px;font-size:0.84rem;font-weight:500;z-index:9999;box-shadow:0 8px 24px rgba(0,0,0,0.3);transition:transform 0.35s cubic-bezier(0.34,1.56,0.64,1);display:flex;align-items:center;gap:0.55rem;white-space:nowrap;}
+  .toast.show{transform:translateX(-50%) translateY(0);}
+  .toast.success{background:var(--teal);}
+  .toast.error{background:#e53e3e;}
+
+  /* DASHBOARD */
+  #page-dashboard{min-height:100vh;position:relative;z-index:1;}
+  .dash-hdr{background:var(--ink);padding:0.9rem 1.8rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;}
+  .dw h2{font-family:'Playfair Display',serif;font-size:1.25rem;color:var(--paper);font-weight:700;}
+  .dw p{color:rgba(250,248,243,0.6);font-size:0.78rem;margin-top:0.1rem;}
+  .du{display:flex;align-items:center;gap:0.7rem;}
+  .dav{width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid var(--accent);}
+  .dut strong{color:var(--paper);font-size:0.84rem;display:block;}
+  .dut span{color:rgba(250,248,243,0.5);font-size:0.7rem;}
+  .logbtn{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:var(--paper);padding:0.36rem 0.88rem;border-radius:6px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:0.77rem;font-weight:500;transition:all 0.2s;}
+  .logbtn:hover{background:rgba(200,98,42,0.3);border-color:var(--accent);}
+  .dash-tab-bar{background:white;border-bottom:2px solid var(--border);display:flex;align-items:center;gap:0;padding:0 1.5rem;position:sticky;top:60px;z-index:90;}
+  .dtab{display:flex;align-items:center;gap:0.45rem;padding:0.82rem 1.2rem;font-family:'DM Sans',sans-serif;font-size:0.86rem;font-weight:500;color:var(--muted);background:none;border:none;border-bottom:2.5px solid transparent;cursor:pointer;transition:all 0.18s;margin-bottom:-2px;white-space:nowrap;}
+  .dtab:hover{color:var(--ink);}
+  .dtab.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:600;}
+  .dtab .tic{font-size:1rem;}
+
+  /* DASHBOARD PROFILE PAGE */
+  .dview{display:none;}
+  .dview.active{display:block;}
+
+  /* Profile hero banner */
+  .prof-hero{background:var(--ink);position:relative;overflow:hidden;padding:2.5rem 2rem 1.5rem;}
+  .prof-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 80%,rgba(200,98,42,0.2),transparent 55%),radial-gradient(ellipse at 80% 20%,rgba(42,127,127,0.18),transparent 55%);}
+  .prof-hero-inner{position:relative;max-width:860px;margin:0 auto;display:flex;align-items:flex-end;gap:1.5rem;flex-wrap:wrap;}
+  .prof-big-av{width:80px;height:80px;border-radius:50%;object-fit:cover;border:3px solid var(--accent);box-shadow:0 0 0 3px rgba(200,98,42,0.25);flex-shrink:0;}
+  .prof-info{flex:1;}
+  .prof-info h2{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;color:var(--paper);}
+  .prof-info p{color:rgba(250,248,243,0.6);font-size:0.82rem;margin-top:0.25rem;}
+  .prof-role-badge{display:inline-block;font-size:0.68rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:0.22rem 0.7rem;border-radius:20px;background:rgba(200,98,42,0.25);color:var(--accent-light);border:1px solid rgba(200,98,42,0.4);margin-top:0.5rem;}
+
+  /* Stats grid */
+  .prof-body{max-width:860px;margin:0 auto;padding:1.8rem 2rem;}
+  @media(max-width:600px){.prof-body{padding:1.2rem 1rem;}}
+  .stats-section-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem;}
+  .stats-section-title::after{content:'';flex:1;height:1px;background:var(--border);}
+
+  .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin-bottom:2rem;}
+  .stat-card{background:white;border:1px solid var(--border);border-radius:14px;padding:1.2rem 1.3rem;box-shadow:0 2px 10px var(--shadow);transition:transform 0.2s,box-shadow 0.2s;position:relative;overflow:hidden;}
+  .stat-card:hover{transform:translateY(-3px);box-shadow:0 6px 20px var(--shadow);}
+  .stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+  .stat-card.c1::before{background:linear-gradient(90deg,var(--accent),var(--accent-light));}
+  .stat-card.c2::before{background:linear-gradient(90deg,#e53e3e,#fc8181);}
+  .stat-card.c3::before{background:linear-gradient(90deg,#6b46c1,#9f7aea);}
+  .stat-card.c4::before{background:linear-gradient(90deg,var(--teal),#4aa8a8);}
+  .stat-card.c5::before{background:linear-gradient(90deg,var(--gold),#e8c87a);}
+  .stat-card.c6::before{background:linear-gradient(90deg,#2d3748,#718096);}
+  .sc-icon{font-size:1.6rem;margin-bottom:0.6rem;display:block;}
+  .sc-val{font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;color:var(--ink);line-height:1;}
+  .sc-label{font-size:0.72rem;color:var(--muted);margin-top:0.3rem;font-weight:500;}
+  .sc-sub{font-size:0.65rem;color:var(--border);margin-top:0.15rem;}
+
+  /* My posts list */
+  .my-posts-list{display:flex;flex-direction:column;gap:0.85rem;}
+  .mp-card{background:white;border:1px solid var(--border);border-radius:12px;padding:1rem 1.2rem;box-shadow:0 1px 6px var(--shadow);display:flex;gap:1rem;align-items:flex-start;}
+  .mp-body{flex:1;min-width:0;}
+  .mp-forum{font-size:0.63rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent);margin-bottom:0.3rem;}
+  .mp-text{font-size:0.84rem;line-height:1.5;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .mp-time{font-size:0.68rem;color:var(--muted);margin-top:0.3rem;}
+  .mp-stats{display:flex;gap:0.7rem;align-items:center;flex-shrink:0;}
+  .mp-stat{font-size:0.75rem;color:var(--muted);display:flex;align-items:center;gap:0.2rem;}
+  .mp-stat.hot{color:var(--accent);}
+  .empty-posts{text-align:center;padding:2rem;color:var(--muted);font-size:0.85rem;}
+  .empty-posts .ei{font-size:2rem;display:block;margin-bottom:0.5rem;}
+
+  /* Dashboard body: sidebar + main */
+  .dash-body{display:grid;grid-template-columns:minmax(200px,25%) 1fr;min-height:calc(100vh - 164px);align-items:start;}
+  @media(max-width:860px){.dash-body{grid-template-columns:1fr;}.dfsb{display:none !important;}.mob-bar{display:flex !important;}}
+
+  /* LEFT FORUM SIDEBAR */
+  .dfsb{background:white;border-right:1px solid var(--border);min-height:calc(100vh - 164px);padding:1.2rem 0;position:sticky;top:164px;overflow-y:auto;max-height:calc(100vh - 164px);}
+  .dsf-hd{font-size:0.6rem;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);padding:0 1.1rem;margin:1rem 0 0.25rem;}
+  .dsf-hd:first-of-type{margin-top:0;}
+  .dsi{display:flex;align-items:center;gap:0.65rem;padding:0.58rem 1.1rem;cursor:pointer;font-size:0.84rem;font-weight:500;color:var(--ink);transition:background 0.15s,color 0.15s;border-left:3px solid transparent;user-select:none;}
+  .dsi:hover{background:var(--cream);color:var(--accent);}
+  .dsi.active{background:rgba(200,98,42,0.09);color:var(--accent);border-left-color:var(--accent);font-weight:600;}
+  .dsi .dic{font-size:1rem;flex-shrink:0;width:22px;text-align:center;}
+  .dsi .dlabel{flex:1;line-height:1.3;}
+  .dsi .dcnt{font-size:0.63rem;color:var(--muted);background:var(--cream);padding:0.07rem 0.42rem;border-radius:10px;border:1px solid var(--border);min-width:20px;text-align:center;}
+  .dsi.active .dcnt{background:rgba(200,98,42,0.15);border-color:rgba(200,98,42,0.3);color:var(--accent);}
+  .ddiv{height:1px;background:var(--border);margin:0.6rem 1.1rem;}
+  .dsf-footer{padding:1rem 1.1rem 0;margin-top:0.5rem;border-top:1px solid var(--cream);}
+  .dsf-footer p{font-size:0.68rem;color:var(--muted);line-height:1.6;}
+
+  /* Mobile chips */
+  .mob-bar{display:none;gap:0.5rem;overflow-x:auto;padding:0.65rem 1rem;background:white;border-bottom:1px solid var(--border);scrollbar-width:none;}
+  .mob-bar::-webkit-scrollbar{display:none;}
+  .mchip{flex-shrink:0;padding:0.32rem 0.82rem;border-radius:20px;font-size:0.75rem;font-weight:500;border:1.5px solid var(--border);background:white;color:var(--muted);cursor:pointer;transition:all 0.15s;white-space:nowrap;}
+  .mchip.active{background:var(--accent);border-color:var(--accent);color:white;}
+
+  /* Main content */
+  .dash-main{padding:1.4rem 1.5rem;max-width:740px;}
+  @media(max-width:1100px){.dash-main{padding:1.2rem 1rem;}}
+  .dft{display:flex;align-items:center;gap:0.6rem;margin-bottom:1rem;}
+  .dft h2{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;}
+  .dft .pcnt{font-size:0.7rem;color:var(--muted);margin-left:auto;background:var(--cream);padding:0.15rem 0.5rem;border-radius:10px;border:1px solid var(--border);}
+
+  /* Compose box */
+  .cbox{background:white;border:1px solid var(--border);border-radius:12px;padding:1.1rem;margin-bottom:1.3rem;box-shadow:0 2px 10px var(--shadow);}
+  .cbox h3{font-size:0.82rem;font-weight:600;margin-bottom:0.65rem;color:var(--muted);}
+  .cinput{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:0.62rem 0.88rem;font-family:'DM Sans',sans-serif;font-size:0.87rem;resize:none;min-height:82px;transition:border-color 0.2s;outline:none;margin-bottom:0.55rem;color:var(--ink);}
+  .cinput:focus{border-color:var(--accent);}
+  .cip{display:none;position:relative;margin-bottom:0.6rem;border-radius:10px;overflow:hidden;border:1px solid var(--border);}
+  .cip img{width:100%;max-height:220px;object-fit:cover;display:block;}
+  .rci{position:absolute;top:6px;right:6px;background:rgba(26,26,46,0.72);color:white;border:none;border-radius:50%;width:26px;height:26px;cursor:pointer;font-size:0.8rem;display:flex;align-items:center;justify-content:center;transition:background 0.15s;}
+  .rci:hover{background:#e53e3e;}
+  .ctb{display:flex;align-items:center;gap:0.45rem;margin-bottom:0.6rem;}
+  .ctbtn{background:var(--cream);border:1px solid var(--border);border-radius:6px;padding:0.33rem 0.72rem;font-size:0.74rem;font-family:'DM Sans',sans-serif;color:var(--muted);cursor:pointer;transition:all 0.15s;display:flex;align-items:center;gap:0.28rem;}
+  .ctbtn:hover{background:var(--border);color:var(--ink);}
+  .ctbtn input{display:none;}
+  .cfooter{display:flex;justify-content:space-between;align-items:center;gap:0.5rem;flex-wrap:wrap;}
+  .cfl{font-size:0.75rem;color:var(--muted);}
+  .cfl strong{color:var(--accent);}
+  .pbtn{background:var(--accent);color:white;border:none;padding:0.5rem 1.25rem;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:0.83rem;font-weight:600;cursor:pointer;transition:all 0.2s;}
+  .pbtn:hover{background:var(--accent-light);transform:translateY(-1px);}
+
+  /* Feed */
+  .fp{background:white;border:1px solid var(--border);border-radius:12px;padding:1.05rem 1.15rem;margin-bottom:0.9rem;box-shadow:0 1px 6px var(--shadow);animation:si 0.3s ease;}
+  @keyframes si{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:translateY(0);}}
+  .fph{display:flex;align-items:center;gap:0.72rem;margin-bottom:0.8rem;}
+  .fav{width:36px;height:36px;border-radius:50%;object-fit:cover;flex-shrink:0;}
+  .fa strong{font-size:0.85rem;display:block;}
+  .fa span{font-size:0.69rem;color:var(--muted);}
+  .ftag{margin-left:auto;font-size:0.62rem;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;padding:0.16rem 0.48rem;border-radius:4px;background:var(--cream);color:var(--muted);border:1px solid var(--border);flex-shrink:0;}
+  .fpb{font-size:0.86rem;line-height:1.65;color:#333;}
+  .fpimg{margin-top:0.85rem;border-radius:10px;overflow:hidden;border:1px solid var(--border);}
+  .fpimg img{width:100%;max-height:300px;object-fit:cover;display:block;cursor:zoom-in;}
+  .fpf{display:flex;gap:1rem;margin-top:0.82rem;padding-top:0.7rem;border-top:1px solid var(--cream);}
+  .fact{background:none;border:none;font-family:'DM Sans',sans-serif;font-size:0.73rem;color:var(--muted);cursor:pointer;display:flex;align-items:center;gap:0.28rem;transition:color 0.15s;}
+  .fact:hover{color:var(--accent);}
+  .fact.liked{color:var(--accent);}
+  .empty{text-align:center;padding:2.5rem 1.5rem;color:var(--muted);}
+  .empty .ei{font-size:2.4rem;margin-bottom:0.6rem;display:block;}
+  .empty p{font-size:0.86rem;}
+
+  /* Lightbox */
+  .lb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:9000;align-items:center;justify-content:center;cursor:zoom-out;}
+  .lb-overlay.open{display:flex;}
+  .lb-overlay img{max-width:90vw;max-height:90vh;border-radius:8px;object-fit:contain;}
+
+
+  /* CARAT ICON */
+  .carat-icon{width:22px;height:22px;object-fit:contain;vertical-align:middle;filter:drop-shadow(0 0 4px rgba(255,215,0,0.5));flex-shrink:0;}
+  .carat-icon-sm{width:16px;height:16px;object-fit:contain;vertical-align:middle;}
+  .carat-icon-lg{width:32px;height:32px;object-fit:contain;vertical-align:middle;filter:drop-shadow(0 0 6px rgba(255,215,0,0.6));}
+
+  /* CARATS BADGE IN HEADER */
+  .carat-badge{display:flex;align-items:center;gap:0.4rem;background:linear-gradient(135deg,rgba(212,168,67,0.2),rgba(184,134,11,0.12));border:1px solid rgba(212,168,67,0.45);border-radius:20px;padding:0.28rem 0.75rem;margin-right:0.5rem;}
+  .carat-gem{font-size:1rem;animation:gem-glow 3s ease-in-out infinite;}
+  @keyframes gem-glow{0%,100%{filter:drop-shadow(0 0 3px rgba(255,215,0,0.4));}50%{filter:drop-shadow(0 0 7px rgba(255,215,0,0.85));}}
+  .carat-val{font-family:'Playfair Display',serif;font-size:0.9rem;font-weight:700;color:#ffd700;letter-spacing:0.5px;}
+  .carat-lbl{font-size:0.62rem;color:rgba(212,168,67,0.65);font-weight:500;text-transform:uppercase;letter-spacing:0.5px;}
+
+  /* EARN POPUP */
+  .earn-pop{position:fixed;top:75px;right:1.5rem;background:linear-gradient(135deg,#1c1438,#2a1e00);border:1.5px solid rgba(212,168,67,0.6);border-radius:12px;padding:0.65rem 1rem;z-index:9998;display:flex;align-items:center;gap:0.65rem;box-shadow:0 8px 28px rgba(212,168,67,0.2);transform:translateX(140%);transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);}
+  .earn-pop.show{transform:translateX(0);}
+  .earn-pop .ep-gem{font-size:1.4rem;}
+  .earn-pop .ep-txt{font-size:0.75rem;color:rgba(250,248,243,0.7);line-height:1.4;}
+  .earn-pop .ep-amt{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:900;color:#ffd700;}
+
+  /* SHOP */
+  .shop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:1rem;margin-bottom:2rem;}
+  .shop-item{background:white;border:1.5px solid var(--border);border-radius:14px;padding:1.3rem 1rem;text-align:center;transition:all 0.22s;position:relative;overflow:hidden;}
+  .shop-item::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent 60%,rgba(212,168,67,0.04));pointer-events:none;}
+  .shop-item:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(212,168,67,0.18);border-color:rgba(212,168,67,0.5);}
+  .shop-item.owned{border-color:var(--teal);}
+  .shop-item.equipped{border-color:var(--accent);}
+  .si-badge{position:absolute;top:0.6rem;right:0.6rem;font-size:0.58rem;font-weight:700;padding:0.15rem 0.5rem;border-radius:20px;letter-spacing:0.4px;text-transform:uppercase;}
+  .si-badge.b-owned{background:var(--teal);color:white;}
+  .si-badge.b-equipped{background:var(--accent);color:white;animation:badge-pulse 2s ease-in-out infinite;}
+  @keyframes badge-pulse{0%,100%{opacity:1;}50%{opacity:0.7;}}
+  .si-preview{width:68px;height:68px;border-radius:50%;margin:0 auto 0.75rem;display:flex;align-items:center;justify-content:center;font-size:1.9rem;background:var(--cream);position:relative;}
+  .si-preview.has-img img{width:100%;height:100%;border-radius:50%;object-fit:cover;}
+  .si-name{font-weight:700;font-size:0.88rem;color:var(--ink);margin-bottom:0.2rem;}
+  .si-desc{font-size:0.71rem;color:var(--muted);margin-bottom:0.75rem;line-height:1.45;}
+  .si-price{display:inline-flex;align-items:center;gap:0.28rem;font-size:0.75rem;font-weight:700;color:#b8860b;background:rgba(212,168,67,0.1);padding:0.2rem 0.6rem;border-radius:20px;margin-bottom:0.75rem;border:1px solid rgba(212,168,67,0.25);}
+  .si-price.free{color:var(--teal);background:rgba(42,127,127,0.1);border-color:rgba(42,127,127,0.25);}
+  .si-btn{width:100%;padding:0.48rem;border-radius:7px;border:none;font-family:'DM Sans',sans-serif;font-size:0.79rem;font-weight:600;cursor:pointer;transition:all 0.18s;}
+  .si-btn.buy{background:linear-gradient(135deg,#d4a843,#b8860b);color:white;}
+  .si-btn.buy:hover{box-shadow:0 4px 14px rgba(212,168,67,0.45);transform:scale(1.02);}
+  .si-btn.equip{background:var(--accent);color:white;}
+  .si-btn.equip:hover{background:var(--accent-light);}
+  .si-btn.unequip{background:var(--cream);color:var(--muted);border:1px solid var(--border);}
+  .si-btn.cant{background:var(--cream);color:var(--muted);cursor:not-allowed;opacity:0.55;}
+
+  /* AVATAR BORDER EFFECTS */
+  .av-fire{box-shadow:0 0 0 3px #ff4500,0 0 14px 5px rgba(255,69,0,0.45),0 0 28px 10px rgba(255,140,0,0.2) !important;animation:fire-pulse 1.5s ease-in-out infinite;}
+  @keyframes fire-pulse{0%,100%{box-shadow:0 0 0 3px #ff4500,0 0 14px 5px rgba(255,69,0,0.45),0 0 28px 10px rgba(255,140,0,0.2);}50%{box-shadow:0 0 0 4px #ff6500,0 0 20px 8px rgba(255,100,0,0.6),0 0 36px 14px rgba(255,140,0,0.3);}}
+  .av-galaxy{box-shadow:0 0 0 3px #7c3aed,0 0 14px 5px rgba(124,58,237,0.5),0 0 28px 10px rgba(99,102,241,0.25) !important;animation:galaxy-pulse 2.5s ease-in-out infinite;}
+  @keyframes galaxy-pulse{0%,100%{box-shadow:0 0 0 3px #7c3aed,0 0 14px 5px rgba(124,58,237,0.5);}50%{box-shadow:0 0 0 3px #a855f7,0 0 20px 8px rgba(168,85,247,0.65);}}
+  .av-ocean{box-shadow:0 0 0 3px #0891b2,0 0 14px 5px rgba(8,145,178,0.45),0 0 28px 10px rgba(14,165,233,0.2) !important;}
+  .av-gold{box-shadow:0 0 0 3px #d4a843,0 0 14px 5px rgba(212,168,67,0.5),0 0 28px 10px rgba(212,168,67,0.25) !important;animation:gold-pulse 2s ease-in-out infinite;}
+  @keyframes gold-pulse{0%,100%{box-shadow:0 0 0 3px #d4a843,0 0 14px 5px rgba(212,168,67,0.5);}50%{box-shadow:0 0 0 4px #ffd700,0 0 22px 9px rgba(255,215,0,0.7);}}
+  .av-sakura{box-shadow:0 0 0 3px #ec4899,0 0 14px 5px rgba(236,72,153,0.45),0 0 28px 10px rgba(244,114,182,0.2) !important;}
+  .av-rainbow{box-shadow:0 0 0 3px #f59e0b,0 0 14px 5px rgba(245,158,11,0.4) !important;animation:rainbow-spin 3s linear infinite;}
+  @keyframes rainbow-spin{0%{box-shadow:0 0 0 3px #f59e0b,0 0 14px 5px rgba(245,158,11,0.4);}16%{box-shadow:0 0 0 3px #10b981,0 0 14px 5px rgba(16,185,129,0.4);}33%{box-shadow:0 0 0 3px #3b82f6,0 0 14px 5px rgba(59,130,246,0.4);}50%{box-shadow:0 0 0 3px #8b5cf6,0 0 14px 5px rgba(139,92,246,0.4);}66%{box-shadow:0 0 0 3px #ec4899,0 0 14px 5px rgba(236,72,153,0.4);}83%{box-shadow:0 0 0 3px #ef4444,0 0 14px 5px rgba(239,68,68,0.4);}100%{box-shadow:0 0 0 3px #f59e0b,0 0 14px 5px rgba(245,158,11,0.4);}}
+
+  @media(max-width:600px){
+    nav{padding:0 1rem;}
+    .hero{padding:3rem 1rem 2.5rem;}
+    .main-layout{padding:1.5rem 1rem;}
+    .auth-right{padding:2rem 1.2rem;}
+    .dash-main{padding:1rem;}
+  }
+</style>
+</head>
+<body>
+<div class="bg-pattern"></div>
+<div id="toast" class="toast"></div>
+<div id="earn-pop" class="earn-pop">
+  <img class="carat-icon-lg" src="carats.png" width="34" height="34"alt="💎">
+  <div><div class="ep-txt">Bạn vừa nhận được</div><div class="ep-amt" id="ep-amt">+1,000 Carats</div></div>
+</div>
+<div class="lb-overlay" id="lbov" onclick="closeLB()"><img id="lbimg" src="" alt=""></div>
+
+<!-- HOME -->
+<div id="page-home" class="page active">
+  <nav>
+    <a class="nav-logo" onclick="showPage('home')"><div class="lb">📚</div>Youth Education</a>
+    <div class="nav-links">
+      <button class="nav-btn" onclick="goToAuth('login')">Đăng nhập</button>
+      <button class="nav-btn primary" onclick="goToAuth('register')">Đăng ký</button>
+    </div>
+  </nav>
+  <div class="hero">
+    <div class="hero-tag">✦ Diễn đàn giáo dục số 1</div>
+    <h1>Nơi học tập<br><em>không ngừng</em><br>phát triển</h1>
+    <p>Kết nối giáo viên và học sinh trong không gian chia sẻ tri thức, bài viết, và kinh nghiệm học tập phong phú.</p>
+    <div class="hero-cta">
+      <button class="btn btn-accent" onclick="goToAuth('register')">🚀 Tham gia miễn phí</button>
+      <button class="btn btn-outline" onclick="goToAuth('login')">Đăng nhập</button>
+    </div>
+  </div>
+  <div class="stats-bar">
+    <div class="stat"><div class="stat-num">1,240</div><div class="stat-label">Thành viên</div></div>
+    <div class="stat"><div class="stat-num">86</div><div class="stat-label">Giáo viên</div></div>
+    <div class="stat"><div class="stat-num">4,530</div><div class="stat-label">Bài viết</div></div>
+    <div class="stat"><div class="stat-num">12</div><div class="stat-label">Diễn đàn</div></div>
+  </div>
+  <div class="main-layout">
+    <div>
+      <div class="section-head"><h2>Diễn đàn Học sinh</h2><div class="line"></div></div>
+      <div class="forum-category">
+        <div class="cat-hdr"><div class="cat-icon" style="background:#fff3e0">🎒</div><div><h3>Lớp học &amp; Chương trình</h3><p>Thảo luận bài học theo từng khối lớp</p></div></div>
+        <a class="fitem" onclick="goToAuth('login')"><div class="fi-icon">📘</div><div class="fi-info"><div class="fi-name">Diễn đàn Lớp 10</div><div class="fi-desc">Toán, Văn, Anh, Lý, Hóa — lớp 10</div></div><div class="fi-meta"><strong>342</strong>bài · 128 thành viên</div></a>
+        <a class="fitem" onclick="goToAuth('login')"><div class="fi-icon">📗</div><div class="fi-info"><div class="fi-name">Diễn đàn Lớp 11</div><div class="fi-desc">Ôn tập, luyện đề lớp 11</div></div><div class="fi-meta"><strong>278</strong>bài · 104 thành viên</div></a>
+        <a class="fitem" onclick="goToAuth('login')"><div class="fi-icon">📕</div><div class="fi-info"><div class="fi-name">Diễn đàn Lớp 12 &amp; Thi THPT</div><div class="fi-desc">Chuẩn bị thi tốt nghiệp, lộ trình ĐH</div></div><div class="fi-meta"><strong>510</strong>bài · 215 thành viên</div></a>
+        <a class="fitem" onclick="goToAuth('login')"><div class="fi-icon">🌏</div><div class="fi-info"><div class="fi-name">Học tiếng Anh cùng nhau</div><div class="fi-desc">Từ vựng, ngữ pháp, IELTS</div></div><div class="fi-meta"><strong>196</strong>bài · 89 thành viên</div></a>
+      </div>
+      <div class="section-head"><h2>Diễn đàn Giáo viên</h2><div class="line"></div></div>
+      <div class="forum-category">
+        <div class="cat-hdr"><div class="cat-icon" style="background:#e8f5e9">🏫</div><div><h3>Cộng đồng Giáo viên FPT</h3><p>Chia sẻ giáo án, phương pháp giảng dạy</p></div></div>
+        <a class="fitem" onclick="goToAuth('login')"><div class="fi-icon">🎓</div><div class="fi-info"><div class="fi-name">Diễn đàn Giáo viên Trường FPT</div><div class="fi-desc">Không gian riêng cho GV FPT Schools</div></div><div class="fi-meta"><strong>421</strong>bài · 86 GV</div></a>
+        <a class="fitem" onclick="goToAuth('login')"><div class="fi-icon">📋</div><div class="fi-info"><div class="fi-name">Chia sẻ Giáo án &amp; Tài liệu</div><div class="fi-desc">Thư viện giáo án, đề thi, slide</div></div><div class="fi-meta"><strong>309</strong>bài · 72 GV</div></a>
+        <a class="fitem" onclick="goToAuth('login')"><div class="fi-icon">💡</div><div class="fi-info"><div class="fi-name">Đổi mới phương pháp giảng dạy</div><div class="fi-desc">Ứng dụng công nghệ, phương pháp mới</div></div><div class="fi-meta"><strong>144</strong>bài · 61 GV</div></a>
+      </div>
+      <div class="section-head"><h2>Góc chung</h2><div class="line"></div></div>
+      <div class="forum-category">
+        <div class="cat-hdr"><div class="cat-icon" style="background:#fce4ec">🌟</div><div><h3>Không gian mở</h3><p>Thông báo, hoạt động ngoại khóa</p></div></div>
+        <a class="fitem" onclick="goToAuth('login')"><div class="fi-icon">📣</div><div class="fi-info"><div class="fi-name">Thông báo &amp; Sự kiện</div><div class="fi-desc">Lịch thi, hoạt động quan trọng</div></div><div class="fi-meta"><strong>87</strong>bài · Tất cả</div></a>
+        <a class="fitem" onclick="goToAuth('login')"><div class="fi-icon">✍️</div><div class="fi-info"><div class="fi-name">Blog học sinh nổi bật</div><div class="fi-desc">Câu chuyện truyền cảm hứng</div></div><div class="fi-meta"><strong>203</strong>bài · Tất cả</div></a>
+      </div>
+    </div>
+    <aside class="hside">
+      <div class="sc">
+        <h3>📝 Bài viết mới nhất</h3>
+        <div class="pc" onclick="goToAuth('login')"><span class="pc-tag tt">Giáo viên</span><h4>5 phương pháp học Toán cho kỳ thi THPT 2025</h4><p>Chia sẻ từ 10 năm giảng dạy của cô Nguyễn...</p><div class="pc-foot"><div class="avm">NT</div><span class="pm">Cô Nguyễn Thu · 2h</span></div></div>
+        <div class="pc" onclick="goToAuth('login')"><span class="pc-tag ts">Học sinh</span><h4>Mẹo học thuộc công thức Hóa học trong 1 tuần</h4><p>Cách ghi nhớ nhanh các phản ứng Hóa...</p><div class="pc-foot"><div class="avm">MH</div><span class="pm">Minh Hùng 10A2 · 5h</span></div></div>
+        <div class="pc" onclick="goToAuth('login')"><span class="pc-tag tc">Lớp 12</span><h4>Review bộ đề Văn ôn thi THPT từ thầy Đức</h4><p>Bộ đề rất sát với đề thi năm ngoái...</p><div class="pc-foot"><div class="avm">LT</div><span class="pm">Lan Thanh · 1 ngày</span></div></div>
+      </div>
+      <div class="sc">
+        <h3>👨‍🏫 Thành viên tích cực</h3>
+        <div class="su"><div class="avs" style="background:linear-gradient(135deg,#2a7f7f,#4aa8a8)">NT</div><div class="sui"><strong>Cô Nguyễn Thu</strong><span>GV Toán — 42 bài</span></div></div>
+        <div class="su"><div class="avs" style="background:linear-gradient(135deg,#c8622a,#e8895a)">ĐM</div><div class="sui"><strong>Thầy Đức Minh</strong><span>GV Văn — 38 bài</span></div></div>
+        <div class="su"><div class="avs" style="background:linear-gradient(135deg,#d4a843,#e8c87a)">MH</div><div class="sui"><strong>Minh Hùng 10A2</strong><span>Học sinh — 29 bài</span></div></div>
+      </div>
+      <div class="sc">
+        <h3>🔗 Truy cập nhanh</h3>
+        <a class="ql" onclick="goToAuth('login')"><span>📌</span> Bài viết được ghim</a>
+        <a class="ql" onclick="goToAuth('login')"><span>🔥</span> Chủ đề nổi bật tuần này</a>
+        <a class="ql" onclick="goToAuth('login')"><span>📅</span> Lịch thi sắp tới</a>
+        <a class="ql" onclick="goToAuth('register')"><span>✨</span> Đăng ký tham gia</a>
+      </div>
+    </aside>
+  </div>
+  <footer><strong>Youth Education</strong> — Diễn đàn học tập dành cho học sinh và giáo viên<br><span style="margin-top:0.35rem;display:block">© 2025 FPT Schools · Tất cả quyền được bảo lưu</span></footer>
+</div>
+
+<!-- AUTH -->
+<div id="page-auth" class="page">
+  <div class="auth-left">
+    <div class="alc">
+      <div class="logo">Youth <span>Education</span></div>
+      <div class="aq">"Giáo dục là vũ khí<br><em>mạnh nhất</em><br>bạn có thể dùng<br>để thay đổi thế giới."</div>
+      <p>— Nelson Mandela</p>
+    </div>
+    <div class="adec">📚</div>
+  </div>
+  <div class="auth-right">
+    <button class="auth-back" onclick="showPage('home')">← Quay về trang chủ</button>
+    <div class="auth-tabs">
+      <button class="auth-tab" id="tab-login" onclick="switchTab('login')">Đăng nhập</button>
+      <button class="auth-tab" id="tab-register" onclick="switchTab('register')">Đăng ký</button>
+    </div>
+    <div class="auth-form" id="form-login">
+      <h2>Chào mừng trở lại!</h2>
+      <p class="sub">Đăng nhập để tiếp tục học tập và chia sẻ</p>
+      <div class="fg"><label>Tên đăng nhập hoặc Email</label><input type="text" id="lu" placeholder="Nhập tên đăng nhập..."><span class="em">Vui lòng nhập tên đăng nhập</span></div>
+      <div class="fg"><label>Mật khẩu</label><input type="password" id="lp" placeholder="Nhập mật khẩu..."><span class="em">Mật khẩu phải ít nhất 6 ký tự</span></div>
+      <button class="sbtn" onclick="handleLogin()">Đăng nhập →</button>
+      <p style="text-align:center;margin-top:1rem;font-size:0.78rem;color:var(--muted)">Chưa có tài khoản? <a onclick="switchTab('register')" style="color:var(--accent);cursor:pointer;font-weight:600">Đăng ký ngay</a></p>
+    </div>
+    <div class="auth-form" id="form-register">
+      <h2>Tạo tài khoản</h2>
+      <p class="sub">Tham gia cộng đồng học tập Youth Education</p>
+      <div class="fg">
+        <label>Vai trò của bạn</label>
+        <div class="rs">
+          <label class="ro selected" id="role-student" onclick="selectRole('student')"><input type="radio" name="role" value="student" checked><span class="ri">🎒</span><span class="rl">Học sinh</span></label>
+          <label class="ro" id="role-teacher" onclick="selectRole('teacher')"><input type="radio" name="role" value="teacher"><span class="ri">🎓</span><span class="rl">Giáo viên</span></label>
+        </div>
+      </div>
+      <div class="fg"><label>Họ và tên</label><input type="text" id="rn" placeholder="Nguyễn Văn A..."><span class="em">Vui lòng nhập họ tên</span></div>
+      <div class="fg"><label>Tên đăng nhập</label><input type="text" id="ru" placeholder="username (không dấu, không cách)"><span class="em">Tên đăng nhập phải 3–20 ký tự, không dấu</span></div>
+      <div class="fg"><label>Email</label><input type="email" id="re" placeholder="example@gmail.com"><span class="em">Email không hợp lệ</span></div>
+      <div class="fg"><label>Mật khẩu</label><input type="password" id="rp" placeholder="Ít nhất 6 ký tự"><span class="em">Mật khẩu phải ít nhất 6 ký tự</span></div>
+      <div class="fg">
+        <label>Ảnh đại diện</label>
+        <div class="fua" id="fua"><input type="file" id="raf" accept="image/*" onchange="handleAvatarUpload(event)"><div class="uic">🖼️</div><p>Kéo thả hoặc <strong>click để chọn ảnh</strong></p><p style="font-size:0.68rem;color:var(--muted);margin-top:0.2rem">JPG, PNG — Tối đa 2MB</p></div>
+        <div class="fprev" id="fprev"><img id="prev-img" src="" alt=""><span id="prev-name">avatar.jpg</span><button class="rf" onclick="removeAvatar()">✕</button></div>
+      </div>
+      <button class="sbtn" onclick="handleRegister()">Tạo tài khoản →</button>
+      <p style="text-align:center;margin-top:1rem;font-size:0.78rem;color:var(--muted)">Đã có tài khoản? <a onclick="switchTab('login')" style="color:var(--accent);cursor:pointer;font-weight:600">Đăng nhập</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="page-dashboard" class="page">
+  <nav>
+    <a class="nav-logo" onclick="showPage('dashboard')"><div class="lb">📚</div>Youth Education</a>
+    <div class="nav-links"></div>
+  </nav>
+  <div class="dash-hdr">
+    <div class="dw"><h2>Xin chào, <span id="dname">Bạn</span>! 👋</h2><p id="dsub">Hôm nay bạn muốn học gì?</p></div>
+    <div class="du">
+      <div class="carat-badge">
+        <img src="carats.png" alt="carat" class="carat-icon-md" style="margin-right:0.1rem;" width="34" height="34">
+        <span class="carat-val" id="hdr-carats">0</span>
+        <span class="carat-lbl">Carats</span>
+      </div>
+      <img class="dav" id="dav" src="https://api.dicebear.com/7.x/initials/svg?seed=YE" alt="avatar">
+      <div class="dut"><strong id="duser">username</strong><span id="drole">Học sinh</span></div>
+      <button class="logbtn" onclick="logout()">Đăng xuất</button>
+    </div>
+  </div>
+
+  <!-- INNER TAB BAR -->
+  <div class="dash-tab-bar">
+    <button class="dtab active" id="dtab-home" onclick="switchDashTab('home')"><span class="tic">🏠</span> Trang cá nhân</button>
+    <button class="dtab" id="dtab-activity" onclick="switchDashTab('activity')"><span class="tic">📋</span> Hoạt động</button>
+    <button class="dtab" id="dtab-shop" onclick="switchDashTab('shop')"><img src="carats.png" alt="carat" class="carat-icon-sm"> Cửa hàng Carats</button>
+  </div>
+
+  <!-- ── VIEW 1: HOME / PROFILE ── -->
+  <div class="dview active" id="dview-home">
+    <div class="prof-hero">
+      <div class="prof-hero-inner">
+        <img class="prof-big-av" id="prof-av" src="https://api.dicebear.com/7.x/initials/svg?seed=YE" alt="">
+        <div class="prof-info">
+          <h2 id="prof-name">Tên người dùng</h2>
+          <p id="prof-username">@username</p>
+          <span class="prof-role-badge" id="prof-role">Học sinh</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="prof-body">
+      <!-- Stats: bài viết đã chia sẻ -->
+      <div class="stats-section-title">📊 Hoạt động của tôi</div>
+      <div class="stats-grid">
+        <div class="stat-card c1">
+          <span class="sc-icon">✍️</span>
+          <div class="sc-val" id="st-posts">0</div>
+          <div class="sc-label">Bài viết đã đăng</div>
+          <div class="sc-sub">blog đã chia sẻ</div>
+        </div>
+        <div class="stat-card c2">
+          <span class="sc-icon">❤️</span>
+          <div class="sc-val" id="st-likes-given">0</div>
+          <div class="sc-label">Tim đã tặng</div>
+          <div class="sc-sub">bài viết đã thích</div>
+        </div>
+        <div class="stat-card c3">
+          <span class="sc-icon">💬</span>
+          <div class="sc-val" id="st-cmts-given">0</div>
+          <div class="sc-label">Bình luận đã gửi</div>
+          <div class="sc-sub">tương tác bình luận</div>
+        </div>
+      </div>
+
+      <!-- Stats: nhận được -->
+      <div class="stats-section-title">🌟 Tôi nhận được</div>
+      <div class="stats-grid">
+        <div class="stat-card c4">
+          <span class="sc-icon">💝</span>
+          <div class="sc-val" id="st-likes-recv">0</div>
+          <div class="sc-label">Tim nhận được</div>
+          <div class="sc-sub">từ bài viết của tôi</div>
+        </div>
+        <div class="stat-card c5">
+          <span class="sc-icon">🗨️</span>
+          <div class="sc-val" id="st-cmts-recv">0</div>
+          <div class="sc-label">Bình luận nhận được</div>
+          <div class="sc-sub">phản hồi bài viết</div>
+        </div>
+        <div class="stat-card c6">
+          <span class="sc-icon">🏆</span>
+          <div class="sc-val" id="st-score">0</div>
+          <div class="sc-label">Điểm tương tác</div>
+          <div class="sc-sub">tim × 2 + bình luận</div>
+        </div>
+      </div>
+
+      <!-- Carats -->
+      <div class="stats-section-title"><img src="carats.png" alt="carat" class="carat-icon-sm" style="margin-right:0.3rem;"> Carats của tôi</div>
+      <div class="stats-grid" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr));">
+        <div class="stat-card" style="border-color:rgba(212,168,67,0.4);background:linear-gradient(135deg,white,rgba(212,168,67,0.04));">
+          <span style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#d4a843,#ffd700);display:block;border-radius:14px 14px 0 0;"></span>
+          <span class="sc-icon"><img src="carats.png" alt="carat" style="width:2rem;height:2rem;object-fit:contain;filter:drop-shadow(0 0 6px rgba(255,200,0,0.6));"></span>
+          <div class="sc-val" id="st-carats" style="color:#b8860b;">0</div>
+          <div class="sc-label">Carats hiện có</div>
+          <div class="sc-sub">1 bài = +1,000 · 1 tim = +500</div>
+        </div>
+        <div class="stat-card" style="border-color:rgba(42,127,127,0.3);background:linear-gradient(135deg,white,rgba(42,127,127,0.03));">
+          <span style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#2a7f7f,#4aa8a8);display:block;border-radius:14px 14px 0 0;"></span>
+          <span class="sc-icon">🎁</span>
+          <div class="sc-val" id="st-owned" style="color:var(--teal);">0</div>
+          <div class="sc-label">Vật phẩm sở hữu</div>
+          <div class="sc-sub">từ cửa hàng Carats</div>
+        </div>
+      </div>
+
+      <!-- My posts -->
+      <div class="stats-section-title">📝 Bài viết của tôi</div>
+      <div id="my-posts-list" class="my-posts-list"></div>
+    </div>
+  </div>
+
+  <!-- ── VIEW 3: SHOP ── -->
+  <div class="dview" id="dview-shop">
+    <div class="prof-hero" style="padding:2rem;">
+      <div style="position:relative;max-width:860px;margin:0 auto;display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;">
+        <div style="font-size:2.5rem;">🏪</div>
+        <div>
+          <h2 style="font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;color:var(--paper);">Cửa hàng Carats</h2>
+          <p style="color:rgba(250,248,243,0.6);font-size:0.82rem;margin-top:0.2rem;">Dùng Carats để mua vật phẩm độc quyền và cá nhân hóa trang cá nhân của bạn</p>
+        </div>
+        <div style="margin-left:auto;" class="carat-badge">
+          <img src="carats.png" width="34" height="34" >
+          <span class="carat-val" id="shop-carats">0</span>
+          <span class="carat-lbl">Carats</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="prof-body">
+      <!-- HOW TO EARN -->
+      <div style="background:linear-gradient(135deg,rgba(212,168,67,0.08),rgba(184,134,11,0.04));border:1px solid rgba(212,168,67,0.25);border-radius:12px;padding:1.1rem 1.4rem;margin-bottom:2rem;display:flex;gap:2rem;flex-wrap:wrap;">
+        <div style="display:flex;align-items:center;gap:0.7rem;"><span style="font-size:1.3rem;">✍️</span><div><div style="font-size:0.78rem;font-weight:700;color:var(--ink);">Đăng bài viết</div><div style="font-size:0.68rem;color:var(--muted);display:flex;align-items:center;gap:0.25rem;"><img src="carats.png" alt="carat" class="carat-icon-sm">+100 / lượt</div></div></div>
+      </div>
+
+      <div class="stats-section-title">🔮 Viền Avatar</div>
+      <div class="shop-grid" id="shop-borders"></div>
+
+      <div class="stats-section-title">✨ Emote Đặc biệt</div>
+      <div class="shop-grid" id="shop-emotes"></div>
+
+      <div class="stats-section-title">🏅 Huy hiệu Danh hiệu</div>
+      <div class="shop-grid" id="shop-badges"></div>
+    </div>
+  </div>
+</div>
+  <div class="dview" id="dview-activity">
+    <!-- Mobile forum chips -->
+    <div class="mob-bar" id="mob-bar"></div>
+    <div class="dash-body">
+      <!-- LEFT SIDEBAR -->
+      <aside class="dfsb">
+        <div class="dsf-hd">Tổng quan</div>
+        <div class="dsi active" id="dsi-all" onclick="selForum('all')"><span class="dic">🏠</span><span class="dlabel">Tất cả bài viết</span><span class="dcnt" id="cnt-all">0</span></div>
+        <div class="ddiv"></div>
+        <div class="dsf-hd">Học sinh</div>
+        <div class="dsi" id="dsi-lop10" onclick="selForum('Lớp 10')"><span class="dic">📘</span><span class="dlabel">Lớp 10</span><span class="dcnt" id="cnt-Lop10">0</span></div>
+        <div class="dsi" id="dsi-lop11" onclick="selForum('Lớp 11')"><span class="dic">📗</span><span class="dlabel">Lớp 11</span><span class="dcnt" id="cnt-Lop11">0</span></div>
+        <div class="dsi" id="dsi-lop12" onclick="selForum('Lớp 12')"><span class="dic">📕</span><span class="dlabel">Lớp 12 &amp; THPT</span><span class="dcnt" id="cnt-Lop12">0</span></div>
+        <div class="dsi" id="dsi-tiengAnh" onclick="selForum('Tiếng Anh')"><span class="dic">🌏</span><span class="dlabel">Học tiếng Anh</span><span class="dcnt" id="cnt-TiengAnh">0</span></div>
+        <div class="ddiv"></div>
+        <div class="dsf-hd">Giáo viên</div>
+        <div class="dsi" id="dsi-gvFPT" onclick="selForum('Giáo viên FPT')"><span class="dic">🎓</span><span class="dlabel">Giáo viên FPT</span><span class="dcnt" id="cnt-GvFPT">0</span></div>
+        <div class="dsi" id="dsi-giaoAn" onclick="selForum('Giáo án')"><span class="dic">📋</span><span class="dlabel">Giáo án &amp; Tài liệu</span><span class="dcnt" id="cnt-GiaoAn">0</span></div>
+        <div class="ddiv"></div>
+        <div class="dsf-hd">Chung</div>
+        <div class="dsi" id="dsi-tbao" onclick="selForum('Thông báo')"><span class="dic">📣</span><span class="dlabel">Thông báo</span><span class="dcnt" id="cnt-TBao">0</span></div>
+        <div class="dsi" id="dsi-blog" onclick="selForum('Blog')"><span class="dic">✍️</span><span class="dlabel">Blog nổi bật</span><span class="dcnt" id="cnt-Blog">0</span></div>
+        <div class="dsf-footer"><p>📚 Youth Education<br>Diễn đàn học tập FPT Schools</p></div>
+      </aside>
+      <!-- MAIN FEED -->
+      <div class="dash-main">
+        <div class="dft">
+          <h2 id="aft">🏠 Tất cả bài viết</h2>
+          <span class="pcnt" id="apc">0 bài</span>
+        </div>
+        <div class="cbox">
+          <h3>✍️ Đăng bài vào: <span id="compose-lbl" style="color:var(--accent)">Tất cả</span></h3>
+          <textarea class="cinput" id="ctext" placeholder="Chọn một diễn đàn bên trái, rồi chia sẻ kiến thức hoặc đặt câu hỏi..."></textarea>
+          <div class="cip" id="cip">
+            <img id="cpimg" src="" alt="">
+            <button class="rci" onclick="rmPostImg()">✕</button>
+          </div>
+          <div class="ctb">
+            <label class="ctbtn">🖼️ Thêm ảnh<input type="file" id="pimginput" accept="image/*" onchange="handlePostImg(event)"></label>
+          </div>
+          <div class="cfooter">
+            <span class="cfl">Đăng vào: <strong id="cfd">Tất cả</strong></span>
+            <button class="pbtn" onclick="submitPost()">Đăng bài →</button>
+          </div>
+        </div>
+        <div id="feed"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+const CARAT_IMG = "carats.png";
+let currentUser = null;
+let activeForum = 'all';
+let activeDashTab = 'home';
+let composeImg = null;
+let uploadedAvatar = null;
+let selectedRole = 'student';
+let carats = 0;
+let likesGiven = 0;
+let cmtsGiven = 0;
+let inventory = {}; // itemId -> {owned, equipped}
+
+// ── SHOP CATALOGUE ──
+const CARAT_IMG_URL = 'carats.png';
+const SHOP = {
+  borders: [
+    {id:'b-fire',   name:'Viền Lửa',     desc:'Hiệu ứng ngọn lửa rực rỡ',    price:3000, preview:'🔥', cls:'av-fire'},
+    {id:'b-galaxy', name:'Viền Thiên Hà', desc:'Ánh sáng tím huyền bí',       price:4500, preview:'🌌', cls:'av-galaxy'},
+    {id:'b-ocean',  name:'Viền Đại Dương',desc:'Sóng biển xanh mát lành',     price:3000, preview:'🌊', cls:'av-ocean'},
+    {id:'b-gold',   name:'Viền Hoàng Kim',desc:'Lung linh vàng — hiếm!',      price:8000, preview:'👑', cls:'av-gold'},
+    {id:'b-sakura', name:'Viền Hoa Anh Đào',desc:'Nhẹ nhàng và lãng mạn',    price:3500, preview:'🌸', cls:'av-sakura'},
+    {id:'b-rainbow',name:'Viền Cầu Vồng', desc:'7 màu sắc xoay liên tục!',   price:12000,preview:'🌈', cls:'av-rainbow'},
+  ],
+  emotes: [
+    {id:'e-star',   name:'Ngôi Sao ⭐',   desc:'Emote sao vàng độc quyền',    price:1500, preview:'⭐'},
+    {id:'e-fire',   name:'Bùng Cháy 🔥',  desc:'Thả lửa vào bài viết',        price:1500, preview:'🔥'},
+    {id:'e-rocket', name:'Tên Lửa 🚀',    desc:'Ý tưởng bay xa!',             price:2000, preview:'🚀'},
+    {id:'e-diamond',name:'Kim Cương',   desc:'Chất lượng cao cấp',          price:3000, preview:'💎'},
+    {id:'e-crown',  name:'Vương Miện 👑', desc:'Dành cho người dẫn đầu',      price:5000, preview:'👑'},
+    {id:'e-magic',  name:'Phép Thuật 🪄', desc:'Tạo nên điều kỳ diệu',        price:2500, preview:'🪄'},
+  ],
+  badges: [
+    {id:'bg-scholar',name:'Học Giả 📚',   desc:'Dành cho người ham học hỏi',  price:2000, preview:'📚'},
+    {id:'bg-star',   name:'Ngôi Sao Sáng',desc:'Top contributor của tháng',   price:4000, preview:'🌟'},
+    {id:'bg-mentor', name:'Cố Vấn 🎓',    desc:'Người hướng dẫn tận tâm',     price:5000, preview:'🎓'},
+    {id:'bg-creator',name:'Nhà Sáng Tạo', desc:'100+ bài viết chất lượng',    price:7000, preview:'🎨'},
+  ],
+};
+const ALL_ITEMS = [...SHOP.borders, ...SHOP.emotes, ...SHOP.badges];
+
+// Forum config
+const FORUMS = [
+  {key:'all', label:'🏠 Tất cả bài viết', shortLabel:'Tất cả', cntId:'cnt-all', dsiId:'dsi-all'},
+  {key:'Lớp 10', label:'📘 Lớp 10', shortLabel:'Lớp 10', cntId:'cnt-Lop10', dsiId:'dsi-lop10'},
+  {key:'Lớp 11', label:'📗 Lớp 11', shortLabel:'Lớp 11', cntId:'cnt-Lop11', dsiId:'dsi-lop11'},
+  {key:'Lớp 12', label:'📕 Lớp 12 & THPT', shortLabel:'Lớp 12', cntId:'cnt-Lop12', dsiId:'dsi-lop12'},
+  {key:'Tiếng Anh', label:'🌏 Học tiếng Anh', shortLabel:'Tiếng Anh', cntId:'cnt-TiengAnh', dsiId:'dsi-tiengAnh'},
+  {key:'Giáo viên FPT', label:'🎓 Giáo viên FPT', shortLabel:'GV FPT', cntId:'cnt-GvFPT', dsiId:'dsi-gvFPT'},
+  {key:'Giáo án', label:'📋 Giáo án & Tài liệu', shortLabel:'Giáo án', cntId:'cnt-GiaoAn', dsiId:'dsi-giaoAn'},
+  {key:'Thông báo', label:'📣 Thông báo', shortLabel:'Thông báo', cntId:'cnt-TBao', dsiId:'dsi-tbao'},
+  {key:'Blog', label:'✍️ Blog nổi bật', shortLabel:'Blog', cntId:'cnt-Blog', dsiId:'dsi-blog'},
+];
+
+let posts = [
+  {id:1,author:'Cô Nguyễn Thu',username:'nguyen.thu',role:'teacher',avatar:'https://api.dicebear.com/7.x/initials/svg?seed=NT&backgroundColor=2a7f7f',forum:'Giáo viên FPT',time:'2 giờ trước',body:'📌 Kính gửi các bạn học sinh lớp 12! Hãy chú ý lịch ôn tập Toán đợt cuối tháng này. Cô đã chuẩn bị bộ đề tổng hợp 6 chương. Các bạn tải về và làm trước để cô chữa bài nhé! 💪',image:null,likes:14,liked:false},
+  {id:2,author:'Minh Hùng',username:'minhhung10a2',role:'student',avatar:'https://api.dicebear.com/7.x/initials/svg?seed=MH&backgroundColor=c8622a',forum:'Lớp 10',time:'5 giờ trước',body:'🔥 Mình vừa tìm được một kênh YouTube cực hay về Vật Lý lớp 10! Giải thích các định luật Newton rất dễ hiểu, có animation minh họa. Ai cần link thì comment nhé!',image:null,likes:9,liked:false},
+  {id:3,author:'Lan Thanh',username:'lanthanh12',role:'student',avatar:'https://api.dicebear.com/7.x/initials/svg?seed=LT&backgroundColor=6b46c1',forum:'Lớp 12',time:'1 ngày trước',body:'Mình vừa hoàn thành bộ đề Văn ôn thi THPT từ thầy Đức — quá xịn! Bộ đề sát đề thật, giải thích rõ từng câu. Ai cần thì nhắn mình nhé 📚',image:null,likes:21,liked:false},
+  {id:4,author:'Thầy Đức Minh',username:'duc.minh.gv',role:'teacher',avatar:'https://api.dicebear.com/7.x/initials/svg?seed=DM&backgroundColor=c8622a',forum:'Giáo án',time:'2 ngày trước',body:'Chia sẻ slide bài giảng môn Văn chủ đề "Nghị luận xã hội" — cập nhật theo chương trình 2025. Anh em đồng nghiệp tham khảo nhé!',image:null,likes:7,liked:false},
+  {id:5,author:'Phương Thảo',username:'phuongthao11b',role:'student',avatar:'https://api.dicebear.com/7.x/initials/svg?seed=PT&backgroundColor=2a7f7f',forum:'Tiếng Anh',time:'3 ngày trước',body:'💬 Tip học từ vựng IELTS hiệu quả: dùng spaced repetition với app Anki + ghi chép theo chủ đề. Sau 3 tháng mình nhớ được hơn 2000 từ! Ai muốn file flashcard thì comment 🙌',image:null,likes:33,liked:false},
+];
+
+// PAGE NAV
+function showPage(p){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.getElementById('page-'+p).classList.add('active');document.documentElement.scrollTop=0;document.body.scrollTop=0;}
+function goToAuth(tab){showPage('auth');switchTab(tab);}
+
+// TABS
+function switchTab(t){
+  ['login','register'].forEach(x=>{
+    document.getElementById('tab-'+x).classList.toggle('active',x===t);
+    document.getElementById('form-'+x).classList.toggle('active',x===t);
+  });
+}
+
+// ROLE
+function selectRole(r){selectedRole=r;document.getElementById('role-student').classList.toggle('selected',r==='student');document.getElementById('role-teacher').classList.toggle('selected',r==='teacher');}
+
+// AVATAR UPLOAD
+function handleAvatarUpload(e){
+  const f=e.target.files[0];if(!f)return;
+  if(f.size>2*1024*1024){toast('Ảnh quá lớn! Tối đa 2MB','error');return;}
+  const r=new FileReader();
+  r.onload=ev=>{uploadedAvatar=ev.target.result;document.getElementById('prev-img').src=ev.target.result;document.getElementById('prev-name').textContent=f.name;document.getElementById('fprev').style.display='flex';document.getElementById('fua').style.display='none';};
+  r.readAsDataURL(f);
+}
+function removeAvatar(){uploadedAvatar=null;document.getElementById('raf').value='';document.getElementById('fprev').style.display='none';document.getElementById('fua').style.display='block';}
+
+// VALIDATION
+function serr(id,has){document.getElementById(id).classList.toggle('error',has);return has;}
+
+// LOGIN
+function handleLogin(){
+  const u=document.getElementById('lu').value.trim(),p=document.getElementById('lp').value;
+  let ok=true;
+  if(!u)ok=!serr('lu',true);else serr('lu',false);
+  if(p.length<6)ok=!serr('lp',true);else serr('lp',false);
+  if(!ok){toast('Vui lòng điền đầy đủ thông tin','error');return;}
+  const saved=JSON.parse(localStorage.getItem('ye_users')||'[]');
+  currentUser=saved.find(x=>(x.username===u||x.email===u)&&x.password===p)||{name:u,username:u,role:'student',avatar:`https://api.dicebear.com/7.x/initials/svg?seed=${u}`,email:''};
+  enterDash();
+}
+
+// REGISTER
+function handleRegister(){
+  const name=document.getElementById('rn').value.trim(),uname=document.getElementById('ru').value.trim(),email=document.getElementById('re').value.trim(),pw=document.getElementById('rp').value;
+  let ok=true;
+  if(!name)ok=!serr('rn',true);else serr('rn',false);
+  if(!uname||uname.length<3||!/^[a-zA-Z0-9_.]+$/.test(uname))ok=!serr('ru',true);else serr('ru',false);
+  if(!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))ok=!serr('re',true);else serr('re',false);
+  if(pw.length<6)ok=!serr('rp',true);else serr('rp',false);
+  if(!ok){toast('Vui lòng kiểm tra lại thông tin','error');return;}
+  const avatar=uploadedAvatar||`https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(name)}&backgroundColor=${selectedRole==='teacher'?'2a7f7f':'c8622a'}`;
+  const user={name,username:uname,email,password:pw,role:selectedRole,avatar};
+  const saved=JSON.parse(localStorage.getItem('ye_users')||'[]');
+  if(saved.find(x=>x.username===uname)){toast('Tên đăng nhập đã tồn tại!','error');return;}
+  saved.push(user);localStorage.setItem('ye_users',JSON.stringify(saved));
+  currentUser=user;
+  toast('Đăng ký thành công! Chào mừng bạn 🎉','success');
+  setTimeout(()=>enterDash(),800);
+}
+
+// ENTER DASHBOARD
+function enterDash(){
+  document.getElementById('dname').textContent=currentUser.name||currentUser.username;
+  document.getElementById('duser').textContent='@'+currentUser.username;
+  document.getElementById('drole').textContent=currentUser.role==='teacher'?'👨‍🏫 Giáo viên':'🎒 Học sinh';
+  document.getElementById('dsub').textContent=currentUser.role==='teacher'?'Chia sẻ kiến thức và truyền cảm hứng cho học trò!':'Hôm nay bạn muốn học gì?';
+  document.getElementById('dav').src=currentUser.avatar;
+  document.getElementById('page-auth').style.display='none';
+  activeForum='all';
+  carats=0; likesGiven=0; cmtsGiven=0; inventory={};
+  updateCaratDisplay();
+  buildMobileBar();
+  updateCounts();
+  selForum('all');
+  switchDashTab('home');
+  showPage('dashboard');
+  toast(`Chào mừng ${currentUser.name||currentUser.username}! 👋`,'success');
+}
+
+// CARATS
+function earnCarats(amt, reason){
+  carats += amt;
+  updateCaratDisplay();
+  showEarnPop(`+${amt.toLocaleString()} Carats`, reason);
+}
+function updateCaratDisplay(){
+  const v = carats.toLocaleString();
+  const els = document.querySelectorAll('#hdr-carats,#shop-carats,#prof-carats');
+  els.forEach(el=>{if(el)el.textContent=v;});
+}
+function showEarnPop(amt, reason){
+  const el = document.getElementById('earn-pop');
+  document.getElementById('ep-amt').textContent = amt;
+  el.querySelector('.ep-txt').textContent = reason || 'Bạn vừa nhận được';
+  el.classList.remove('show');
+  void el.offsetWidth;
+  el.classList.add('show');
+  clearTimeout(el._t);
+  el._t = setTimeout(()=>el.classList.remove('show'), 3200);
+}
+
+// EQUIPPED BORDER CLASS
+function equippedBorderClass(){
+  const eq = Object.entries(inventory).find(([id,v])=>v.equipped && SHOP.borders.find(b=>b.id===id));
+  if(!eq) return '';
+  const item = SHOP.borders.find(b=>b.id===eq[0]);
+  return item ? item.cls : '';
+}
+
+// DASH TAB SWITCH
+function switchDashTab(tab){
+  activeDashTab=tab;
+  ['home','activity','shop'].forEach(t=>{
+    const tb=document.getElementById('dtab-'+t);
+    const dv=document.getElementById('dview-'+t);
+    if(tb) tb.classList.toggle('active',t===tab);
+    if(dv) dv.classList.toggle('active',t===tab);
+  });
+  if(tab==='home') renderProfile();
+  if(tab==='shop') renderShop();
+}
+
+// RENDER PROFILE / HOME TAB
+function renderProfile(){
+  const u=currentUser;
+  const av = document.getElementById('prof-av');
+  av.src=u.avatar;
+  // Apply equipped border
+  av.className = 'prof-big-av ' + equippedBorderClass();
+
+  document.getElementById('prof-name').textContent=u.name||u.username;
+  document.getElementById('prof-username').textContent='@'+u.username;
+  document.getElementById('prof-role').textContent=u.role==='teacher'?'👨‍🏫 Giáo viên':'🎒 Học sinh';
+
+  const myPosts=posts.filter(p=>p.username===u.username);
+  const likesRecv=myPosts.reduce((s,p)=>s+p.likes,0);
+  const cmtsRecv=myPosts.reduce((s,p)=>s+(p.comments||0),0);
+  const score=likesRecv*2+cmtsRecv+likesGiven+cmtsGiven;
+
+  animCount('st-posts',myPosts.length);
+  animCount('st-likes-given',likesGiven);
+  animCount('st-cmts-given',cmtsGiven);
+  animCount('st-likes-recv',likesRecv);
+  animCount('st-cmts-recv',cmtsRecv);
+  animCount('st-score',score);
+  // carats
+  const ce=document.getElementById('st-carats');
+  if(ce) animCount('st-carats',carats);
+
+  renderMyPosts(myPosts);
+}
+
+function animCount(id,target){
+  const el=document.getElementById(id);
+  if(!el)return;
+  let cur=0; const step=Math.max(1,Math.ceil(target/20));
+  const t=setInterval(()=>{cur=Math.min(cur+step,target);el.textContent=cur;if(cur>=target)clearInterval(t);},40);
+}
+
+function renderMyPosts(myPosts){
+  const el=document.getElementById('my-posts-list');
+  if(!myPosts.length){
+    el.innerHTML=`<div class="empty-posts"><span class="ei">📭</span><p>Bạn chưa đăng bài viết nào.<br>Sang tab <strong>Hoạt động</strong> để bắt đầu chia sẻ!</p></div>`;
+    return;
+  }
+  el.innerHTML=myPosts.map(p=>`
+    <div class="mp-card">
+      <div class="mp-body">
+        <div class="mp-forum">${p.forum}</div>
+        <div class="mp-text">${p.body.replace(/<[^>]*>/g,'')}</div>
+        <div class="mp-time">${p.time}</div>
+      </div>
+      <div class="mp-stats">
+        <span class="mp-stat${p.likes>0?' hot':''}">❤️ ${p.likes}</span>
+        <span class="mp-stat">💬 ${p.comments||0}</span>
+      </div>
+    </div>`).join('');
+  // update owned count
+  const ownedCount = Object.values(inventory).filter(v=>v.owned).length;
+  const st=document.getElementById('st-owned'); if(st) animCount('st-owned',ownedCount);
+}
+
+// ── SHOP ──
+function renderShop(){
+  updateCaratDisplay();
+  renderShopSection('shop-borders', SHOP.borders);
+  renderShopSection('shop-emotes', SHOP.emotes);
+  renderShopSection('shop-badges', SHOP.badges);
+}
+
+function renderShopSection(containerId, items){
+  const el = document.getElementById(containerId);
+  if(!el) return;
+  el.innerHTML = items.map(item=>{
+    const inv = inventory[item.id] || {owned:false, equipped:false};
+    let badge='', btnHtml='';
+    if(inv.equipped){
+      badge=`<span class="si-badge b-equipped">✦ Đang dùng</span>`;
+      btnHtml=`<button class="si-btn unequip" onclick="unequipItem('${item.id}')">Gỡ ra</button>`;
+    } else if(inv.owned){
+      badge=`<span class="si-badge b-owned">✓ Sở hữu</span>`;
+      const canEquip = SHOP.emotes.find(e=>e.id===item.id)||SHOP.borders.find(b=>b.id===item.id);
+      btnHtml=canEquip
+        ?`<button class="si-btn equip" onclick="equipItem('${item.id}')">Trang bị</button>`
+        :`<button class="si-btn cant" disabled>Huy hiệu</button>`;
+    } else {
+      const canAfford = carats >= item.price;
+      btnHtml=`<button class="si-btn buy${canAfford?'':' cant'}" onclick="buyItem('${item.id}')" ${canAfford?'':'disabled'}><img src="carats.png" alt="carat" class="carat-icon-sm"> ${item.price.toLocaleString()} Carats</button>`;
+    }
+    // preview — avatar borders show with a sample avatar
+    const previewHTML = SHOP.borders.find(b=>b.id===item.id)
+      ? `<div class="si-preview"><img src="${currentUser.avatar}" alt="" style="border-radius:50%;width:100%;height:100%;object-fit:cover;" class="${inv.equipped?item.cls:''}"></div>`
+      : `<div class="si-preview">${item.preview}</div>`;
+    return `
+      <div class="shop-item ${inv.equipped?'equipped':inv.owned?'owned':''}" id="si-${item.id}">
+        ${badge}
+        ${previewHTML}
+        <div class="si-name">${item.name}</div>
+        <div class="si-desc">${item.desc}</div>
+        <div class="si-price"><img src="carats.png" alt="carat" class="carat-icon-sm"> ${item.price.toLocaleString()}</div>
+        ${btnHtml}
+      </div>`;
+  }).join('');
+}
+
+function buyItem(id){
+  const item = ALL_ITEMS.find(i=>i.id===id);
+  if(!item) return;
+  if(carats < item.price){ toast('Không đủ Carats!','error'); return; }
+  carats -= item.price;
+  inventory[id] = {owned:true, equipped:false};
+  updateCaratDisplay();
+  toast(`Đã mua "${item.name}"! 🎉`,'success');
+  renderShop();
+}
+
+function equipItem(id){
+  const item = ALL_ITEMS.find(i=>i.id===id);
+  if(!item || !inventory[id]?.owned) return;
+  // Unequip same category
+  const isBorder = !!SHOP.borders.find(b=>b.id===id);
+  const isEmote = !!SHOP.emotes.find(e=>e.id===id);
+  const isBadge = !!SHOP.badges.find(b=>b.id===id);
+  Object.keys(inventory).forEach(k=>{
+    if(inventory[k].equipped){
+      if(isBorder && SHOP.borders.find(b=>b.id===k)) inventory[k].equipped=false;
+      if(isEmote && SHOP.emotes.find(e=>e.id===k)) inventory[k].equipped=false;
+      if(isBadge && SHOP.badges.find(b=>b.id===k)) inventory[k].equipped=false;
+    }
+  });
+  inventory[id].equipped = true;
+  toast(`Đã trang bị "${item.name}"! ✨`,'success');
+  renderShop();
+  if(activeDashTab==='home') renderProfile();
+}
+
+function unequipItem(id){
+  if(inventory[id]) inventory[id].equipped=false;
+  const item = ALL_ITEMS.find(i=>i.id===id);
+  toast(`Đã gỡ "${item?.name||'vật phẩm'}"`, '');
+  renderShop();
+  if(activeDashTab==='home') renderProfile();
+}
+
+function logout(){currentUser=null;document.getElementById('page-auth').style.display='';showPage('home');toast('Đã đăng xuất thành công','success');}
+
+
+function selForum(key){
+  activeForum=key;
+  // Sidebar active
+  FORUMS.forEach(f=>{const el=document.getElementById(f.dsiId);if(el)el.classList.toggle('active',f.key===key);});
+  // Mobile chips
+  document.querySelectorAll('.mchip').forEach(c=>c.classList.toggle('active',c.dataset.k===key));
+  // Compose label + placeholder
+  const info=FORUMS.find(f=>f.key===key);
+  const lbl=key==='all'?'Tất cả':(info?info.shortLabel:key);
+  document.getElementById('compose-lbl').textContent=lbl;
+  document.getElementById('cfd').textContent=lbl;
+  const ta=document.getElementById('ctext');
+  ta.placeholder=key==='all'
+    ?'← Chọn một diễn đàn bên trái để đăng bài...'
+    :`Chia sẻ trong "${lbl}" — kiến thức, câu hỏi, bài viết...`;
+  renderFeed();
+}
+
+function buildMobileBar(){
+  document.getElementById('mob-bar').innerHTML=FORUMS.map(f=>
+    `<button class="mchip${f.key===activeForum?' active':''}" data-k="${f.key}" onclick="selForum('${f.key}')">${f.key==='all'?'🏠 Tất cả':f.shortLabel}</button>`
+  ).join('');
+}
+
+function updateCounts(){
+  FORUMS.forEach(f=>{
+    const el=document.getElementById(f.cntId);
+    if(el) el.textContent=f.key==='all'?posts.length:posts.filter(p=>p.forum===f.key).length;
+  });
+}
+
+// RENDER FEED
+function renderFeed(){
+  const filtered=activeForum==='all'?[...posts]:posts.filter(p=>p.forum===activeForum);
+  const info=FORUMS.find(f=>f.key===activeForum);
+  document.getElementById('aft').textContent=info?info.label:activeForum;
+  document.getElementById('apc').textContent=filtered.length+' bài';
+  const feed=document.getElementById('feed');
+  if(!filtered.length){
+    feed.innerHTML=`<div class="empty"><span class="ei">📬</span><p>Chưa có bài viết nào trong diễn đàn này.<br>Hãy là người đầu tiên chia sẻ!</p></div>`;
+    return;
+  }
+  feed.innerHTML=filtered.map(p=>`
+    <div class="fp" id="post-${p.id}">
+      <div class="fph">
+        <img class="fav" src="${p.avatar}" alt="${p.author}" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=${p.username}'">
+        <div class="fa"><strong>${p.author}</strong><span>@${p.username} · ${p.time} · ${p.role==='teacher'?'👨‍🏫 Giáo viên':'🎒 Học sinh'}</span></div>
+        <span class="ftag">${p.forum}</span>
+      </div>
+      <div class="fpb">${p.body.replace(/\n/g,'<br>')}</div>
+      ${p.image?`<div class="fpimg"><img src="${p.image}" alt="Ảnh bài viết" onclick="openLB('${p.image}')"></div>`:''}
+      <div class="fpf">
+        <button class="fact${p.liked?' liked':''}" onclick="likePost(${p.id},this)">❤️ ${p.likes}</button>
+        <button class="fact">💬 Bình luận</button>
+        <button class="fact">🔗 Chia sẻ</button>
+      </div>
+    </div>`).join('');
+}
+
+// POST IMAGE
+function handlePostImg(e){
+  const f=e.target.files[0];if(!f)return;
+  if(f.size>5*1024*1024){toast('Ảnh quá lớn! Tối đa 5MB','error');return;}
+  const r=new FileReader();
+  r.onload=ev=>{composeImg=ev.target.result;document.getElementById('cpimg').src=ev.target.result;document.getElementById('cip').style.display='block';};
+  r.readAsDataURL(f);
+}
+function rmPostImg(){composeImg=null;document.getElementById('pimginput').value='';document.getElementById('cip').style.display='none';}
+
+// SUBMIT POST
+function submitPost(){
+  const text=document.getElementById('ctext').value.trim();
+  if(!text&&!composeImg){toast('Hãy viết gì đó hoặc thêm ảnh!','error');return;}
+  if(text&&text.length<5){toast('Bài viết quá ngắn','error');return;}
+  if(activeForum==='all'){toast('Vui lòng chọn một diễn đàn cụ thể để đăng bài!','error');return;}
+  posts.unshift({
+    id:Date.now(),author:currentUser.name||currentUser.username,
+    username:currentUser.username,role:currentUser.role,avatar:currentUser.avatar,
+    forum:activeForum,time:'Vừa xong',body:text,image:composeImg,likes:0,liked:false
+  });
+  document.getElementById('ctext').value='';
+  rmPostImg();
+  updateCounts();
+  buildMobileBar();
+  renderFeed();
+  if(activeDashTab==='home') renderProfile();
+  earnCarats(1000, '🎉 Đăng bài viết mới!');
+  toast('Bài viết đã được đăng! ✨','success');
+}
+
+// LIKE
+function likePost(id,btn){
+  const p=posts.find(x=>x.id===id);if(!p)return;
+  p.liked=!p.liked;p.likes+=p.liked?1:-1;
+  if(p.liked){
+    likesGiven++;
+    earnCarats(100, '❤️ Tim bài viết (+100)');
+    // If it's the current user's post, they earn 500 for receiving
+    if(p.username===currentUser.username) earnCarats(500,'💝 Bài của bạn được thích! (+500)');
+  } else {
+    likesGiven=Math.max(0,likesGiven-1);
+    carats=Math.max(0,carats-100);
+    updateCaratDisplay();
+  }
+  btn.classList.toggle('liked',p.liked);
+  btn.innerHTML=`❤️ ${p.likes}`;
+  if(activeDashTab==='home') renderProfile();
+}
+
+// LIGHTBOX
+function openLB(src){document.getElementById('lbimg').src=src;document.getElementById('lbov').classList.add('open');}
+function closeLB(){document.getElementById('lbov').classList.remove('open');}
+
+// TOAST
+function toast(msg,type=''){
+  const t=document.getElementById('toast');
+  const icons={success:'✓',error:'✕','':`ℹ`};
+  t.textContent=(icons[type]||'')+' '+msg;
+  t.className='toast'+(type?' '+type:'');
+  void t.offsetWidth;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+// INIT
+switchTab('login');
+</script>
+</body>
+</html>
